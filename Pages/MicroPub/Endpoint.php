@@ -409,7 +409,9 @@ namespace IdnoPlugins\IndiePub\Pages\MicroPub {
                     $this->setInput('like-of', $like_of);
                     $this->setInput('repost-of', $repost_of);
                     $this->setInput('rsvp', $rsvp);
-                    if ($visibility == 'private') {
+                    // Visibility empty means draft post (ex. iA Writer).
+                    // Known isn't support draft mode, so should change draft as private.
+                    if (empty($visibility)) {
                         $currentUser = \Idno\Core\Idno::site()->session()->currentUserUUID();
                         $this->setInput('access', $currentUser);
                     } else {
