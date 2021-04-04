@@ -416,7 +416,7 @@ namespace IdnoPlugins\IndiePub\Pages\MicroPub {
                     $this->setInput('rsvp', $rsvp);
                     // Visibility empty means draft post (ex. iA Writer).
                     // Known isn't support draft mode, so should change draft as private.
-                    if (empty($visibility)) {
+                    if ($visibility == 'private' || empty($visibility)) {
                         $currentUser = \Idno\Core\Idno::site()->session()->currentUserUUID();
                         $this->setInput('access', $currentUser);
                     } else {
