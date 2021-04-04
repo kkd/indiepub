@@ -169,6 +169,7 @@ namespace IdnoPlugins\IndiePub\Pages\MicroPub {
                 $video_url   = $this->getJSONInput('video');
                 $audio_url   = $this->getJSONInput('audio');
                 $visibility  = $this->getJSONInput('visibility');
+                $slug        = $this->getJSONInput('mp-slug');
 
                 // Handle visibility
                 if(is_array($visibility) && array_key_exists(0, $visibility)) {
@@ -249,7 +250,8 @@ namespace IdnoPlugins\IndiePub\Pages\MicroPub {
                 $photo_url   = $this->getInput('photo');
                 $video_url   = $this->getInput('video');
                 $audio_url   = $this->getInput('audio');
-                $visibility   = $this->getInput('visibility');
+                $visibility  = $this->getInput('visibility');
+                $slug        = $this->getInput('mp-slug');
             }
 
             if (!empty($mp_type)) {
@@ -442,6 +444,11 @@ namespace IdnoPlugins\IndiePub\Pages\MicroPub {
                         \Idno\Core\Idno::site()->logging()->info("Setting syndication: $syndication");
                         $this->setInput('syndication', $syndication);
                     }
+
+                    if (!empty($slug)) {
+                        $entity->setSlug($slug);
+                    }
+
                     if ($entity->saveDataFromInput()) {
                         \Idno\Core\Idno::site()->events()->triggerEvent('indiepub/post/success', ['page' => $this, 'object' => $entity]);
                         $this->setResponse(201);
